@@ -10,7 +10,7 @@ class Page{
         $db = new Database(require \base_path('config.php'));
         $userModel = new Users($db);
 
-        $members = $userModel->members();
+        $members = $userModel->getAllMembers();
 
         Functions::view('index.view.php', [
             'role' => isset($_SESSION['role']) ? $_SESSION['role'] : 'Guest',
@@ -25,7 +25,7 @@ class Page{
 
         $id = $_GET['id'];
 
-        $member=$user->getMember($id);
+        $member=$user->getMemberById($id);
 
         Functions::view('single.view.php', ['member'=>$member]);
     }
