@@ -1,3 +1,0 @@
-# imenikoop.stefan
-
-##imenik.stefan
