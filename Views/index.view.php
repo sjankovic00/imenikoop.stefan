@@ -1,5 +1,4 @@
 <?php
-session_start();
 $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
 ?>
 <!DOCTYPE html>
@@ -119,7 +118,7 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
 <div class="buttons">
     <a href="/logout" class="logout">Log Out</a>
     <?php if ($role === 'admin'): ?>
-        <a href="/#" class="add">Add</a>
+        <a href="/add" class="add">Add</a>
         <a href="/#" class="edit">Edit</a>
     <?php endif; ?>
 </div>
