@@ -33,6 +33,9 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
         }
 
         .member {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 10px;
             border-bottom: 1px solid #ddd;
         }
@@ -87,11 +90,15 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
             background-color: #229954;
         }
 
-        .edit {
+        .edit-button {
             background-color: #2ecc71;
+            padding: 5px 10px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
         }
 
-        .edit:hover {
+        .edit-button:hover {
             background-color: #28b463;
         }
     </style>
@@ -104,12 +111,13 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
     <div class="members-list">
         <?php foreach ($members as $member): ?>
             <div class="member">
-               <a href="/member?id= <?= $member['id']; ?>">
-                    <?= htmlspecialchars($member['ime'] . " " . $member['prezime']); ?>
-               </a>
-                <br>
-                <small>Broj telefona:<?= htmlspecialchars($member['br_telefona']); ?>
-                    </small>
+                <div>
+                    <a href="/member?id=<?= $member['id']; ?>">
+                        <?= htmlspecialchars($member['ime'] . " " . $member['prezime']); ?>
+                    </a>
+                    <br>
+                    <small>Broj telefona: <?= htmlspecialchars($member['br_telefona']); ?></small>
+                </div>
             </div>
         <?php endforeach; ?>
     </div>
@@ -119,8 +127,5 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
     <a href="/logout" class="logout">Log Out</a>
     <?php if ($role === 'admin'): ?>
         <a href="/add" class="add">Add</a>
-        <a href="/#" class="edit">Edit</a>
     <?php endif; ?>
 </div>
-</body>
-</html>

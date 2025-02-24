@@ -15,7 +15,6 @@ class Authorize
     {
         $user = $us->getUsername($username);
         if ($user && $us->getPwd($password, $user['password'])) {
-            session_start();
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
             $_SESSION['id'] = $user['id'];
