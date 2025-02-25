@@ -1,7 +1,8 @@
 <?php
 session_start();
-//error_reporting(E_ALL);
 //ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
 
 const BASE_PATH = __DIR__ . '/../';
 
@@ -14,10 +15,11 @@ require base_path('Core/Router.php');
 spl_autoload_register(function ($class) {
     $class = str_replace('\\', DIRECTORY_SEPARATOR, $class);
     $file = base_path($class . '.php');
+
     if (file_exists($file)) {
         require $file;
     } else {
-        die("Greska");
+        die("Greška: Ne mogu da učitam klasu '$class'. Fajl ne postoji: $file");
     }
 });
 

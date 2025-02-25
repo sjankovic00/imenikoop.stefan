@@ -1,8 +1,12 @@
 <?php
 namespace Controllers;
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+//error_reporting(E_ALL);
 use Core\Database;
 use Helpers\Functions;
 use Models\Users;
+
 
 class Page{
     public function index()
@@ -22,11 +26,26 @@ class Page{
     {
         $db = new Database(require \base_path('config.php'));
         $user = new Users($db);
+        if (!isset($_GET['id']) || empty($_GET['id'])) {
+            die("Greška: ID člana nije prosleđen!");
+        }
 
-        $id = $_GET['id'];
+        $id = (int) $_GET['id'];
 
-        $member=$user->getMemberById($id);
+        $member = $user->getMemberById($id);
 
-        Functions::view('single.view.php', ['member'=>$member]);
+        //
+        if (!$member) {
+            die("Greška: Član nije pronađen u bazi!");
+        }
+
+        $images = $user->getImageById($id);
+
+        Functions::view('single.view.php', [
+            'member' => $member,
+            'images' => $images
+        ]);
     }
+
+
 }

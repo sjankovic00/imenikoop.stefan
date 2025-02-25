@@ -1,6 +1,6 @@
 $(document).ready(function () { //ceka da se stranica ucita, pa tek krece da se izvrsava
 
-    $(".edit-btn").click(function () { //kada kliknemo na edit, pokrecemo funkciju koja ucitava id, salje ajax zahtev, popunjava forme
+    $(document).on("click", ".edit-btn", function () { //kada kliknemo na edit, pokrecemo funkciju koja ucitava id, salje ajax zahtev, popunjava forme
         let memberId = $(this).attr("data-id"); // dohvatamo id korisnika uz pomoc data-id
 
         $.ajax({ // ajax zahtev za ucitavanje podataka clana
@@ -83,3 +83,46 @@ $(document).ready(function () { //ceka da se stranica ucita, pa tek krece da se 
         });
     });
 });
+
+$(document).ready(function() {
+    $("#uploadForm").submit(function(e) {
+        e.preventDefault(); // Sprečava reload stranice
+        console.log("AJAX aktivan!"); // Debugging
+
+        let formData = new FormData(this);
+
+        $.ajax({
+            url: "upload.php",
+            type: "POST",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                console.log("Server response:", response); // Debugging
+
+                try {
+                    let json = JSON.parse(response);
+                    if (json.success) {
+                        let newImage = $("<img>")
+                            .attr("src", "/" + json.filepath)
+                            .addClass("user-image")
+                            .hide()
+                            .fadeIn(500);
+
+                        $(".user-images").append(newImage);
+                    } else {
+                        alert("Greška pri uploadu: " + json.message);
+                    }
+                } catch (error) {
+                    console.error("JSON parse error:", error);
+                    alert("Neispravan odgovor servera.");
+                }
+            },
+            error: function(xhr) {
+                console.error("AJAX Greška:", xhr.responseText);
+                alert("Greška pri uploadu slike!");
+            }
+        });
+    });
+});
+
