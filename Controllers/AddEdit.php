@@ -39,6 +39,7 @@ class AddEdit
 
         $id = $_POST['id'];
 
+
         if (!empty($_POST['ime'])) {
             $data = [
                 'id' => $id,
@@ -57,6 +58,7 @@ class AddEdit
 
         $member = $this->userModel->getMemberById($id);
         echo json_encode($member ? ['success' => true, 'data' => $member] : ['success' => false, 'message' => 'Clan ne postoji']);
+
     }
 
     public function deleteMember()

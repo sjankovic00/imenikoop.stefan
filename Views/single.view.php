@@ -92,7 +92,14 @@ $role = $_SESSION['role'] ?? '';
             margin-bottom: 10px;
         }
 
-        /* Modal stil */
+        .user-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        /* ======== MODAL STILOVI ======== */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -142,31 +149,6 @@ $role = $_SESSION['role'] ?? '';
             border-radius: 4px;
         }
 
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .btn-primary {
-            background-color: #008CBA;
-            color: white;
-        }
-
-        .btn-danger {
-            background-color: #f44336;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #007bb5;
-        }
-
-        .btn-danger:hover {
-            background-color: #d32f2f;
-        }
     </style>
 </head>
 <body>
@@ -179,26 +161,45 @@ $role = $_SESSION['role'] ?? '';
     <div class="info"><span class="label">Adresa:</span> <?= htmlspecialchars($member['adresa']) ?></div>
     <div class="info"><span class="label">Email:</span> <?= htmlspecialchars($member['email']) ?></div>
     <div class="info"><span class="label">Opis:</span> <?= htmlspecialchars($member['opis']) ?></div>
-    <?php if (!empty($member['website'])): ?>
-        <div class="info">
-            <span class="label">Website:</span>
-            <?= htmlspecialchars($member['website']) ?>
-        </div>
-    <?php endif; ?>
+
+    <h3>Slika korisnika:</h3>
+    <div class="user-images">
+        <?php if (!empty($images)): ?>
+            <?php foreach ($images as $image): ?>
+                <img src="/<?= htmlspecialchars($image) ?>" alt="Profilna slika" class="user-image">
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>Nema dostupnih slika za ovog korisnika.</p>
+        <?php endif; ?>
+    </div>
+
+
+
     <?php if ($role === 'admin'): ?>
+        <div class="upload-form">
+            <h3>Dodaj sliku</h3>
+            <form id="uploadForm" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="user_id" value="<?= $member['id']; ?>">
+                <label for="uploadFile">Izaberite sliku:</label>
+                <input type="file" name="uploadFile" id="uploadFile" required>
+                <button type="submit">Dodaj sliku</button>
+            </form>
+        </div>
+
         <div class="actions">
             <button class="edit-btn" data-id="<?= $member['id']; ?>">Izmeni</button>
             <button class="delete-btn" data-id="<?= $member['id']; ?>">Obriši</button>
         </div>
-        <form class="upload-form" action="upload.php" method="post" enctype="multipart/form-data">
-            <label for="uploadFile">Upload image:</label>
-            <input type="file" name="uploadFile" id="uploadFile">
-            <input type="submit" value="Upload Image" name="submit" class="btn btn-primary">
-        </form>
+
     <?php endif; ?>
+
     <a href="/index" class="back">Nazad na stranu</a>
 </div>
+
+<!-- Overlay pozadina -->
 <div class="modal-overlay"></div>
+
+<!-- Modal za izmenu -->
 <div id="editModal">
     <h2>Izmeni podatke</h2>
     <form id="editForm">
@@ -226,11 +227,11 @@ $role = $_SESSION['role'] ?? '';
         <input type="text" id="edit-website" name="website" class="form-input">
         <br>
         <br>
-        <button type="button" id="saveEdit" class="btn btn-primary">Sačuvaj</button>
-        <button type="button" class="modal-close btn btn-danger">Zatvori</button>
+        <button type="button" id="saveEdit">Sačuvaj</button>
+        <button type="button" class="modal-close">Zatvori</button>
     </form>
 </div>
-
 <script src="script.js"></script>
+
 </body>
 </html>

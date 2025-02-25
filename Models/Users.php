@@ -32,12 +32,15 @@ class Users
         return $stmt->fetchAll();
     }
 
-    public function getMemberById($id)
-    {
-        $query = "SELECT * FROM members WHERE id=:id";
-        $stmt = $this->db->query($query, ["id" => $id]);
-        return $stmt->fetch();
+    public function getMemberById($id) {
+        $query = "SELECT * FROM members WHERE id = :id";
+        $stmt = $this->db->query($query, [':id' => $id]);
+
+        $member = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        return $member;
     }
+
 
     public function addMember($data)
     {
@@ -57,4 +60,16 @@ class Users
         $query = "DELETE FROM members WHERE id = :id";
         return $this->db->query($query, ["id" => $id]);
     }
+
+    public function getImageById($user_id)
+    {
+        $query = "SELECT images.filepath 
+              FROM images 
+              JOIN user_images ON images.id = user_images.image_id 
+              WHERE user_images.user_id = :user_id";
+
+        $stmt = $this->db->query($query, [':user_id' => $user_id]);
+        return $stmt->fetchAll(\PDO::FETCH_COLUMN);
+    }
+
 }
