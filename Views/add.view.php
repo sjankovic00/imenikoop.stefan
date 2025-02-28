@@ -100,6 +100,11 @@
             <label for="website">Website (ako postoji):</label>
             <input type="url" id="website" name="website">
         </div>
+<!--        <div class="form-group">-->
+<!--            <label for="uploadFile">Slika:</label>-->
+<!--            <input type="file" name="uploadFile" id="uploadFile">-->
+<!--        </div>-->
+
         <button type="submit">Dodaj clana</button>
     </form>
     <a class="back-link" href="/index">Nazad na listu članova</a>

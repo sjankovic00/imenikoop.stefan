@@ -13,7 +13,7 @@ class AddEdit
         $db = new Database(require \base_path('config.php'));
         $this->userModel = new Users($db);
     }
-    public function write()
+    public function add()
     {
         $data = [
             'ime' => $_POST['ime'] ?? '',
@@ -24,12 +24,12 @@ class AddEdit
             'opis' => $_POST['opis'] ?? '',
             'website' => $_POST['website'] ?? null,
         ];
-
-        $this->userModel->addMember($data);
+       $this->userModel->addMember($data);
 
         header('Location: /index');
         exit();
     }
+
     public function showAdd()
     {
         Functions::view('add.view.php');
@@ -72,8 +72,7 @@ class AddEdit
             } else {
                 echo json_encode(['success' => false, 'message' => 'Neuspešno brisanje']);
             }
+        }
         exit();
     }
-
-}
 }

@@ -162,16 +162,24 @@ $role = $_SESSION['role'] ?? '';
     <div class="info"><span class="label">Email:</span> <?= htmlspecialchars($member['email']) ?></div>
     <div class="info"><span class="label">Opis:</span> <?= htmlspecialchars($member['opis']) ?></div>
 
-    <h3>Slika korisnika:</h3>
+    <h3>Slika:</h3>
     <div class="user-images">
         <?php if (!empty($images)): ?>
+
             <?php foreach ($images as $image): ?>
-                <img src="/<?= htmlspecialchars($image) ?>" alt="Profilna slika" class="user-image">
+                <div class="image-container">
+                    <img src="/<?= htmlspecialchars($image['filepath']) ?>" alt="Profilna slika" class="user-image">
+                    <br>
+                    <?php if ($role === 'admin'): ?>
+                        <button type="button" class="delete-image-btn" data-image-id="<?= $image['id'] ?>">Obriši sliku</button>
+                    <?php endif; ?>
+                </div>
             <?php endforeach; ?>
         <?php else: ?>
-            <p>Nema dostupnih slika za ovog korisnika.</p>
+            <p class="no-images-message">Nema dostupnih slika za ovog korisnika.</p>
         <?php endif; ?>
     </div>
+
 
 
 
@@ -196,10 +204,6 @@ $role = $_SESSION['role'] ?? '';
     <a href="/index" class="back">Nazad na stranu</a>
 </div>
 
-<!-- Overlay pozadina -->
-<div class="modal-overlay"></div>
-
-<!-- Modal za izmenu -->
 <div id="editModal">
     <h2>Izmeni podatke</h2>
     <form id="editForm">

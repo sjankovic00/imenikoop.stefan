@@ -84,10 +84,9 @@ $(document).ready(function () { //ceka da se stranica ucita, pa tek krece da se 
     });
 });
 
-$(document).ready(function() {
-    $("#uploadForm").submit(function(e) {
-        e.preventDefault(); // Sprečava reload stranice
-        console.log("AJAX aktivan!"); // Debugging
+$(document).ready(function () {
+    $("#uploadForm").submit(function (e) {
+        e.preventDefault();
 
         let formData = new FormData(this);
 
@@ -97,32 +96,61 @@ $(document).ready(function() {
             data: formData,
             contentType: false,
             processData: false,
-            success: function(response) {
-                console.log("Server response:", response); // Debugging
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    alert("Slika je uspešno dodata!");
 
-                try {
-                    let json = JSON.parse(response);
-                    if (json.success) {
-                        let newImage = $("<img>")
-                            .attr("src", "/" + json.filepath)
-                            .addClass("user-image")
-                            .hide()
-                            .fadeIn(500);
+                    let newImageHtml = `
+                        <div class="image-container">
+                            <img src="/${response.filepath}" alt="Profilna slika" class="user-image">
+                            <button class="delete-image-btn" data-image-id="${response.image_id}">Obriši sliku</button>
+                        </div>
+                    `;
 
-                        $(".user-images").append(newImage);
-                    } else {
-                        alert("Greška pri uploadu: " + json.message);
-                    }
-                } catch (error) {
-                    console.error("JSON parse error:", error);
-                    alert("Neispravan odgovor servera.");
+                    $(".user-images").append(newImageHtml);
+                    $(".no-images-message").remove();
+                    $("#uploadForm")[0].reset();
+                } else {
+                    alert("Greška pri uploadu slike: " + response.message);
                 }
             },
-            error: function(xhr) {
-                console.error("AJAX Greška:", xhr.responseText);
-                alert("Greška pri uploadu slike!");
+            error: function () {
+                alert("Došlo je do greške pri uploadu slike.");
             }
         });
+    });
+});
+
+$(document).on("click", ".delete-image-btn", function () {
+    let imageId = $(this).attr("data-image-id"); // Uzmi ID slike
+    let imageContainer = $(this).closest(".image-container"); // Nađi div slike
+
+    if (!confirm("Da li ste sigurni da želite da obrišete ovu sliku?")) {
+        return;
+    }
+
+    $.ajax({
+        url: "/delete_image.php",
+        type: "POST",
+        data: { image_id: imageId },
+        dataType: "json",
+        success: function (response) {
+            if (response.success) {
+                alert("Slika je uspešno obrisana!");
+                imageContainer.remove(); // Uklanja sliku i dugme BEZ reload-a
+
+                // Ako više nema slika, prikaži poruku
+                if ($(".image-container").length === 0) {
+                    $(".user-images").html("<p class='no-images-message'>Nema dostupnih slika za ovog korisnika.</p>");
+                }
+            } else {
+                alert("Greška pri brisanju slike: " + response.message);
+            }
+        },
+        error: function () {
+            alert("Došlo je do greške pri brisanju slike.");
+        }
     });
 });
 

@@ -18,7 +18,7 @@ $router->get('/index',[$page, 'index']);
 $router->get('/member', [$page, 'single']);
 
 $router->get('/add',[$add, 'showAdd']);
-$router->post('/add',[$add, 'write']);
+$router->post('/add',[$add, 'add']);
 
 $router->post('/edit', [$add, 'editMember']);
 $router->post('/delete', [$add, 'deleteMember']);
