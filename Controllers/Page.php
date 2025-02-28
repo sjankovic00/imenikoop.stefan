@@ -26,15 +26,11 @@ class Page{
     {
         $db = new Database(require \base_path('config.php'));
         $user = new Users($db);
-        if (!isset($_GET['id']) || empty($_GET['id'])) {
-            die("Greška: ID člana nije prosleđen!");
-        }
 
-        $id = (int) $_GET['id'];
+        $id =(int) $_GET['id'];
 
         $member = $user->getMemberById($id);
 
-        //
         if (!$member) {
             die("Greška: Član nije pronađen u bazi!");
         }
