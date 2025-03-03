@@ -19,7 +19,7 @@ spl_autoload_register(function ($class) {
     if (file_exists($file)) {
         require $file;
     } else {
-        die("Greška: Ne mogu da učitam klasu '$class'. Fajl ne postoji: $file");
+        die("Error!");
     }
 });
 
@@ -34,3 +34,5 @@ if ($uri === '' || $uri === '/index.php') {
 }
 $method = $_SERVER['REQUEST_METHOD'];
 $router->route($uri, $method);
+//var_dump($_SERVER);
+//die();

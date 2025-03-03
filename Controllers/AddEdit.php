@@ -16,12 +16,12 @@ class AddEdit
     public function add()
     {
         $data = [
-            'ime' => $_POST['ime'] ?? '',
-            'prezime' => $_POST['prezime'] ?? '',
-            'br_telefona' => $_POST['br_telefona'] ?? '',
-            'adresa' => $_POST['adresa'] ?? '',
+            'name' => $_POST['name'] ?? '',
+            'surname' => $_POST['surname'] ?? '',
+            'phone_number' => $_POST['phone_number'] ?? '',
+            'address' => $_POST['address'] ?? '',
             'email' => $_POST['email'] ?? '',
-            'opis' => $_POST['opis'] ?? '',
+            'description' => $_POST['description'] ?? '',
             'website' => $_POST['website'] ?? null,
         ];
        $this->userModel->addMember($data);
@@ -40,15 +40,15 @@ class AddEdit
         $id = $_POST['id'];
 
 
-        if (!empty($_POST['ime'])) {
+        if (!empty($_POST['name'])) {
             $data = [
                 'id' => $id,
-                'ime' => $_POST['ime'],
-                'prezime' => $_POST['prezime'],
-                'br_telefona' => $_POST['br_telefona'],
-                'adresa' => $_POST['adresa'],
-                'email' => $_POST['email'],
-                'opis' => $_POST['opis'],
+                'name' => $_POST['name'] ?? '',
+                'surname' => $_POST['surname'] ?? '',
+                'phone_number' => $_POST['phone_number'] ?? '',
+                'address' => $_POST['address'] ?? '',
+                'email' => $_POST['email'] ?? '',
+                'description' => $_POST['description'] ?? '',
                 'website' => $_POST['website'] ?? null,
             ];
 
@@ -57,7 +57,7 @@ class AddEdit
         }
 
         $member = $this->userModel->getMemberById($id);
-        echo json_encode($member ? ['success' => true, 'data' => $member] : ['success' => false, 'message' => 'Clan ne postoji']);
+        echo json_encode($member ? ['success' => true, 'data' => $member] : ['success' => false, 'message' => 'Member does not exist']);
 
     }
 
@@ -70,7 +70,7 @@ class AddEdit
             if ($deleted) {
                 echo json_encode(['success' => true]);
             } else {
-                echo json_encode(['success' => false, 'message' => 'Neuspešno brisanje']);
+                echo json_encode(['success' => false, 'message' => 'Delete failed']);
             }
         }
         exit();

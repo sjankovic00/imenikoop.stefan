@@ -25,7 +25,7 @@ class Auth
                 exit();
             }
             else {
-                $_SESSION['error'] = " Neispravan username ili password.";
+                $_SESSION['error'] = " Wrong username or password.";
                 header("Location: /");
                 exit();
             }

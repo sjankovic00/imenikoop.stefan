@@ -32,7 +32,7 @@ class Page{
         $member = $user->getMemberById($id);
 
         if (!$member) {
-            die("Greška: Član nije pronađen u bazi!");
+            die("Error!");
         }
 
         $images = $user->getImageById($id);
