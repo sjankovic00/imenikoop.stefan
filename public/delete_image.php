@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['image_id'])) {
 
     echo json_encode(["success" => true]);
     exit;
+} else {
+    echo json_encode(["success" => false]);
+    exit;
 }
-
-echo json_encode(["success" => false]);
-exit;

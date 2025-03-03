@@ -70,22 +70,22 @@
 </head>
 <body>
 <div class="form-container">
-    <h1>Dodaj novog clana</h1>
+    <h1>Add new member</h1>
     <form action="/add" method="POST">
         <div class="form-group">
-            <label for="ime">Ime:</label>
+            <label for="ime">Name:</label>
             <input type="text" id="ime" name="ime" required>
         </div>
         <div class="form-group">
-            <label for="prezime">Prezime:</label>
+            <label for="prezime">Surname:</label>
             <input type="text" id="prezime" name="prezime" required>
         </div>
         <div class="form-group">
-            <label for="br_telefona">Broj telefona:</label>
+            <label for="br_telefona">Phone:</label>
             <input type="text" id="br_telefona" name="br_telefona" required>
         </div>
         <div class="form-group">
-            <label for="adresa">Adresa:</label>
+            <label for="adresa">Address:</label>
             <input type="text" id="adresa" name="adresa">
         </div>
         <div class="form-group">
@@ -93,11 +93,11 @@
             <input type="email" id="email" name="email">
         </div>
         <div class="form-group">
-            <label for="opis">Opis:</label>
+            <label for="opis">Description:</label>
             <textarea id="opis" name="opis" rows="4"></textarea>
         </div>
         <div class="form-group">
-            <label for="website">Website (ako postoji):</label>
+            <label for="website">Website (if it exists):</label>
             <input type="url" id="website" name="website">
         </div>
 <!--        <div class="form-group">-->
@@ -105,9 +105,9 @@
 <!--            <input type="file" name="uploadFile" id="uploadFile">-->
 <!--        </div>-->
 
-        <button type="submit">Dodaj clana</button>
+        <button type="submit">Add member</button>
     </form>
-    <a class="back-link" href="/index">Nazad na listu članova</a>
+    <a class="back-link" href="/index">Back to the page</a>
 </div>
 </body>
 </html>

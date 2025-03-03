@@ -6,7 +6,7 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista</title>
+    <title>List</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -106,17 +106,17 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
 <body>
 
 <div class="container">
-    <p>Prijavljeni ste kao <?= htmlspecialchars($role); ?>.</p>
+    <p>You are logged in as <?= htmlspecialchars($role); ?>.</p>
 
     <div class="members-list">
         <?php foreach ($members as $member): ?>
             <div class="member">
                 <div>
                     <a href="/member?id=<?= $member['id']; ?>">
-                        <?= htmlspecialchars($member['ime'] . " " . $member['prezime']); ?>
+                        <?= htmlspecialchars($member['name'] . " " . $member['surname']); ?>
                     </a>
                     <br>
-                    <small>Broj telefona: <?= htmlspecialchars($member['br_telefona']); ?></small>
+                    <small>Phone: <?= htmlspecialchars($member['phone_number']); ?></small>
                 </div>
             </div>
         <?php endforeach; ?>

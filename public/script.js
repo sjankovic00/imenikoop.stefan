@@ -14,23 +14,23 @@ $(document).ready(function () { //ceka da se stranica ucita, pa tek krece da se 
                 if (response.success) { // ako je true dobijamo podatke clana
                     let data = response.data;
                     $("#edit-id").val(data.id || ''); //popunjavanje forme sa podacima iz baze
-                    $("#edit-name").val(data.ime || '');
-                    $("#edit-surname").val(data.prezime || '');
-                    $("#edit-phone").val(data.br_telefona || '');
-                    $("#edit-address").val(data.adresa || '');
+                    $("#edit-name").val(data.name || '');
+                    $("#edit-surname").val(data.surname || '');
+                    $("#edit-phone").val(data.phone_number || '');
+                    $("#edit-address").val(data.address || '');
                     $("#edit-email").val(data.email || '');
-                    $("#edit-opis").val(data.opis || '');
+                    $("#edit-opis").val(data.description || '');
                     $("#edit-website").val(data.website ? data.website : '');
 
                     $(".modal-overlay").fadeIn(); // siva pozadina na modalu
                     $("#editModal").fadeIn(); // prikaz modala za editovanje
                 } else {
-                    alert("Greška pri učitavanju podataka: " + response.message);
+                    alert("Error loading data: " + response.message);
                 }
             },
             error: function (xhr, status, error) {   // ako dodje do success===false, prikazuje gresku
-                console.error("AJAX Greška:", xhr.responseText);
-                alert("Došlo je do greške. Proveri konzolu.");
+                console.error("AJAX Error:", xhr.responseText);
+                alert("An error occurred. Check the console.");
             }
         });
     });
@@ -51,10 +51,10 @@ $(document).ready(function () { //ceka da se stranica ucita, pa tek krece da se 
             success: function (response) {
                 console.log("Save response:", response);
                 if (response.success) {
-                    alert("Podaci uspešno ažurirani!");
+                    alert("Data successfully updated!");
                     location.reload();
                 } else {
-                    alert("Greška pri ažuriranju: " + response.message);
+                    alert("Error updating: " + response.message);
                 }
             }
         });
@@ -63,7 +63,7 @@ $(document).ready(function () { //ceka da se stranica ucita, pa tek krece da se 
     $(".delete-btn").click(function () { //klikom na dugme obrisi dobijamo upit
         let memberId = $(this).attr("data-id"); // uzimamo id clana iz data-id kog treba da obrisemo
 
-        if (!confirm("Da li ste sigurni da želite da obrišete ovog člana?")) { // poruka koju dobijamo
+        if (!confirm("Are you sure you want to delete this member?")) { // poruka koju dobijamo
             return;
         }
 
@@ -74,10 +74,10 @@ $(document).ready(function () { //ceka da se stranica ucita, pa tek krece da se 
             dataType: "json",
             success: function (response) {
                 if (response.success) {
-                    alert("Član uspešno obrisan!");
+                    alert("Member successfully deleted!");
                     window.location.href = "/index"; // vraca nas na index stranu nako sto je uspesno obrisan clan
                 } else {
-                    alert("Greška pri brisanju: " + response.message);
+                    alert("Error deleting: " + response.message);
                 }
             }
         });
@@ -99,12 +99,12 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 if (response.success) {
-                    alert("Slika je uspešno dodata!");
+                    alert("Picture successfully added!");
 
                     let newImageHtml = `
                         <div class="image-container">
                             <img src="/${response.filepath}" alt="Profilna slika" class="user-image">
-                            <button class="delete-image-btn" data-image-id="${response.image_id}">Obriši sliku</button>
+                            <button class="delete-image-btn" data-image-id="${response.image_id}">Delete picture</button>
                         </div>
                     `;
 
@@ -112,11 +112,11 @@ $(document).ready(function () {
                     $(".no-images-message").remove();
                     $("#uploadForm")[0].reset();
                 } else {
-                    alert("Greška pri uploadu slike: " + response.message);
+                    alert("Error uploading image: " + response.message);
                 }
             },
             error: function () {
-                alert("Došlo je do greške pri uploadu slike.");
+                alert("There was an error uploading the image.");
             }
         });
     });
@@ -126,7 +126,7 @@ $(document).on("click", ".delete-image-btn", function () {
     let imageId = $(this).attr("data-image-id"); // Uzmi ID slike
     let imageContainer = $(this).closest(".image-container"); // Nađi div slike
 
-    if (!confirm("Da li ste sigurni da želite da obrišete ovu sliku?")) {
+    if (!confirm("Are you sure you want to delete this picture?")) {
         return;
     }
 
@@ -137,19 +137,19 @@ $(document).on("click", ".delete-image-btn", function () {
         dataType: "json",
         success: function (response) {
             if (response.success) {
-                alert("Slika je uspešno obrisana!");
+                alert("Picture successfully deleted!");
                 imageContainer.remove(); // Uklanja sliku i dugme BEZ reload-a
 
                 // Ako više nema slika, prikaži poruku
                 if ($(".image-container").length === 0) {
-                    $(".user-images").html("<p class='no-images-message'>Nema dostupnih slika za ovog korisnika.</p>");
+                    $(".user-images").html("<p class='no-images-message'>There are no images available for this user.</p>");
                 }
             } else {
-                alert("Greška pri brisanju slike: " + response.message);
+                alert("Error deleting image:" + response.message);
             }
         },
         error: function () {
-            alert("Došlo je do greške pri brisanju slike.");
+            alert("An error occurred while deleting the picture.");
         }
     });
 });

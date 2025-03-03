@@ -7,7 +7,7 @@ $role = $_SESSION['role'] ?? '';
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Podaci o članu</title>
+    <title>Member information</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
@@ -154,15 +154,15 @@ $role = $_SESSION['role'] ?? '';
 <body>
 
 <div class="container">
-    <h1>Podaci o članu</h1>
-    <div class="info"><span class="label">Ime:</span> <?= htmlspecialchars($member['ime']) ?></div>
-    <div class="info"><span class="label">Prezime:</span> <?= htmlspecialchars($member['prezime']) ?></div>
-    <div class="info"><span class="label">Broj telefona:</span> <?= htmlspecialchars($member['br_telefona']) ?></div>
-    <div class="info"><span class="label">Adresa:</span> <?= htmlspecialchars($member['adresa']) ?></div>
+    <h1>Member information</h1>
+    <div class="info"><span class="label">Name:</span> <?= htmlspecialchars($member['name']) ?></div>
+    <div class="info"><span class="label">Surname:</span> <?= htmlspecialchars($member['surname']) ?></div>
+    <div class="info"><span class="label">Phone:</span> <?= htmlspecialchars($member['phone_number']) ?></div>
+    <div class="info"><span class="label">Address:</span> <?= htmlspecialchars($member['address']) ?></div>
     <div class="info"><span class="label">Email:</span> <?= htmlspecialchars($member['email']) ?></div>
-    <div class="info"><span class="label">Opis:</span> <?= htmlspecialchars($member['opis']) ?></div>
+    <div class="info"><span class="label">Description:</span> <?= htmlspecialchars($member['description']) ?></div>
 
-    <h3>Slika:</h3>
+        <h3>Picture:</h3>
     <div class="user-images">
         <?php if (!empty($images)): ?>
 
@@ -171,12 +171,12 @@ $role = $_SESSION['role'] ?? '';
                     <img src="/<?= htmlspecialchars($image['filepath']) ?>" alt="Profilna slika" class="user-image">
                     <br>
                     <?php if ($role === 'admin'): ?>
-                        <button type="button" class="delete-image-btn" data-image-id="<?= $image['id'] ?>">Obriši sliku</button>
+                        <button type="button" class="delete-image-btn" data-image-id="<?= $image['id'] ?>">Delete picture</button>
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
-            <p class="no-images-message">Nema dostupnih slika za ovog korisnika.</p>
+            <p class="no-images-message">No pictures available.</p>
         <?php endif; ?>
     </div>
 
@@ -185,54 +185,54 @@ $role = $_SESSION['role'] ?? '';
 
     <?php if ($role === 'admin'): ?>
         <div class="upload-form">
-            <h3>Dodaj sliku</h3>
+            <h3>Add a picture</h3>
             <form id="uploadForm" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="user_id" value="<?= $member['id']; ?>">
-                <label for="uploadFile">Izaberite sliku:</label>
+                <label for="uploadFile">Select a picture:</label>
                 <input type="file" name="uploadFile" id="uploadFile" required>
-                <button type="submit">Dodaj sliku</button>
+                <button type="submit">Add</button>
             </form>
         </div>
 
         <div class="actions">
-            <button class="edit-btn" data-id="<?= $member['id']; ?>">Izmeni</button>
-            <button class="delete-btn" data-id="<?= $member['id']; ?>">Obriši</button>
+            <button class="edit-btn" data-id="<?= $member['id']; ?>">Edit</button>
+            <button class="delete-btn" data-id="<?= $member['id']; ?>">Delete</button>
         </div>
 
     <?php endif; ?>
 
-    <a href="/index" class="back">Nazad na stranu</a>
+    <a href="/index" class="back">Back to the page</a>
 </div>
 
 <div id="editModal">
-    <h2>Izmeni podatke</h2>
+    <h2>Edit data</h2>
     <form id="editForm">
         <input type="hidden" id="edit-id" name="id">
 
-        <label>Ime:</label>
-        <input type="text" id="edit-name" name="ime" class="form-input">
+        <label>Name:</label>
+        <input type="text" id="edit-name" name="name" class="form-input">
         <br>
-        <label>Prezime:</label>
-        <input type="text" id="edit-surname" name="prezime" class="form-input">
+        <label>Surname:</label>
+        <input type="text" id="edit-surname" name="surname" class="form-input">
         <br>
-        <label>Broj telefona:</label>
-        <input type="text" id="edit-phone" name="br_telefona" class="form-input">
+        <label>Phone:</label>
+        <input type="text" id="edit-phone" name="phone_number" class="form-input">
         <br>
-        <label>Adresa:</label>
-        <input type="text" id="edit-address" name="adresa" class="form-input">
+        <label>Address:</label>
+        <input type="text" id="edit-address" name="address" class="form-input">
         <br>
         <label>Email:</label>
         <input type="email" id="edit-email" name="email" class="form-input">
         <br>
-        <label>Opis:</label>
-        <input type="text" id="edit-opis" name="opis" class="form-input">
+        <label>Description:</label>
+        <input type="text" id="edit-opis" name="description" class="form-input">
         <br>
         <label>Website:</label>
         <input type="text" id="edit-website" name="website" class="form-input">
         <br>
         <br>
-        <button type="button" id="saveEdit">Sačuvaj</button>
-        <button type="button" class="modal-close">Zatvori</button>
+        <button type="button" id="saveEdit">Save</button>
+        <button type="button" class="modal-close">Close</button>
     </form>
 </div>
 <script src="script.js"></script>
