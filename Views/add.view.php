@@ -74,19 +74,19 @@
     <form action="/add" method="POST">
         <div class="form-group">
             <label for="ime">Name:</label>
-            <input type="text" id="ime" name="ime" required>
+            <input type="text" id="ime" name="name" required>
         </div>
         <div class="form-group">
             <label for="prezime">Surname:</label>
-            <input type="text" id="prezime" name="prezime" required>
+            <input type="text" id="prezime" name="surname" required>
         </div>
         <div class="form-group">
             <label for="br_telefona">Phone:</label>
-            <input type="text" id="br_telefona" name="br_telefona" required>
+            <input type="text" id="br_telefona" name="phone_number" required>
         </div>
         <div class="form-group">
             <label for="adresa">Address:</label>
-            <input type="text" id="adresa" name="adresa">
+            <input type="text" id="adresa" name="address">
         </div>
         <div class="form-group">
             <label for="email">Email:</label>
@@ -94,7 +94,7 @@
         </div>
         <div class="form-group">
             <label for="opis">Description:</label>
-            <textarea id="opis" name="opis" rows="4"></textarea>
+            <textarea id="opis" name="description" rows="4"></textarea>
         </div>
         <div class="form-group">
             <label for="website">Website (if it exists):</label>
